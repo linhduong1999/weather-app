@@ -1,9 +1,8 @@
-import React from 'react'
+import React from "react";
+import WeatherCard from "./WeatherCard";
 
 const WeatherList = () => {
-  return (
-    <div>WeatherList</div>
-  )
-}
+  return <WeatherCard />;
+};
 
-export default WeatherList
+export default WeatherList;
