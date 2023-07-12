@@ -8,36 +8,13 @@ import AcUnitIcon from "@mui/icons-material/AcUnit";
 import UmbrellaIcon from "@mui/icons-material/Umbrella";
 
 const WeatherIcon = ({ code }) => {
-  switch (code) {
-    case "01d":
-      return <Brightness5Icon />;
-    case "01n":
-      return <Brightness2Icon />;
-    case "02d":
-    case "02n":
-      return <CloudQueueIcon />;
-    case "03d":
-    case "03n":
-    case "04d":
-    case "04n":
-      return <CloudIcon />;
-    case "09d":
-    case "09n":
-    case "10d":
-    case "10n":
-      return <UmbrellaIcon />;
-    case "11d":
-    case "11n":
-      return <StormIcon />;
-    case "13d":
-    case "13n":
-      return <AcUnitIcon />;
-    case "50d":
-    case "50n":
-      return <GrainIcon />;
-    default:
-      return <>no icon</>;
-  }
+  const getImageUrl = (iconCode) => {
+    const baseUrl = "https://openweathermap.org/img/wn/";
+    const imageUrl = `${baseUrl}${iconCode}@2x.png`;
+    return imageUrl;
+  };
+
+  return <img src={getImageUrl(code)} alt="Weather Icon" />;
 };
 
 export default WeatherIcon;

@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { getFiveDaysData } from "../../utils/transformData";
 
 const apiUrl = "https://api.openweathermap.org/data/2.5/forecast";
 
@@ -19,8 +20,9 @@ export const useGetFiveDaysForecast = (lat, lon, tempUnits = "metric") => {
             appid: import.meta.env.VITE_REACT_APP_API_KEY,
           },
         });
+        const transformedData = getFiveDaysData(response.data.list);
 
-        setData(response.data);
+        setData(transformedData);
         setIsLoading(false);
       } catch (error) {
         console.error("Error fetching data:", error.message);

@@ -4,7 +4,7 @@ import {
   CardContent,
   CardHeader,
   Typography,
-  Grid,
+  Box,
   IconButton,
 } from "@mui/material";
 import { RemoveCircle } from "@mui/icons-material";
@@ -42,16 +42,12 @@ const WeatherCard = ({ data }) => {
           <Typography variant="body1" color="text.secondary" gutterBottom>
             Low: {data[tempUnit].low}°{tempUnit}
           </Typography>
-          <Grid container spacing={1}>
-            <Grid item>
-              <WeatherIcon code={data.weather.icon} />
-            </Grid>
-            <Grid item>
-              <Typography variant="body1" color="text.secondary" gutterBottom>
-                {data.weather.description}
-              </Typography>
-            </Grid>
-          </Grid>
+          <Box display="flex" justifyContent="center" alignItems="center">
+            <WeatherIcon code={data.weather.icon} />
+            <Typography variant="body1" color="text.secondary" gutterBottom>
+              {data.weather.description}
+            </Typography>
+          </Box>
         </CardContent>
       </Link>
     </Card>

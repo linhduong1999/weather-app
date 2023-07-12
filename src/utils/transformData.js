@@ -4,9 +4,9 @@ const toCelsius = (kelvin) => (kelvin - 273.15).toFixed(2);
 // Converts Kelvin to Fahrenheit
 const toFahrenheit = (kelvin) => (((kelvin - 273.15) * 9) / 5 + 32).toFixed(2);
 
-export const extractWeatherData = (data, name) => {
+export const extractWeatherData = (data) => {
   return {
-    name: name,
+    name: data.name,
     coord: data.coord,
     weather: data.weather[0],
     C: {
@@ -20,4 +20,9 @@ export const extractWeatherData = (data, name) => {
       high: toFahrenheit(data.main.temp_max),
     },
   };
+};
+
+export const getFiveDaysData = (forecastData) => {
+  //need to do this
+  console.log("WORK TO DO")
 };
