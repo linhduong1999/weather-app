@@ -17,7 +17,7 @@ export const useGetCurrentForecast = async (lat, lon, name) => {
 
     return transformedData; // Added return statement
   } catch (error) {
-    console.error("Error fetching data:", error.message);
-    throw error; // Optional: Rethrow the error to handle it outside the function
+    window.alert("An error occurred while fetching the current forecast."); // Display the error message as a window alert
+    throw error;
   }
 };

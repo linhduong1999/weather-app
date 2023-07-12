@@ -15,12 +15,11 @@ const WeatherList = () => {
           cities.map((city) => (
             <Grid
               item
-              key={`${city.lat}-${city.lon}`}
+              key={`${city.name}-${city.coord.lat}-${city.coord.lon}`}
               xs={12}
               sm={6}
               md={4}
               lg={3}
-              sx={{ flexGrow: 0, flexShrink: 0 }}
             >
               <WeatherCard data={city} />
             </Grid>

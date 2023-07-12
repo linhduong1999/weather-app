@@ -13,8 +13,9 @@ const createUserSlice = (set, get) => ({
         set({ user: email, cities: persistedCities });
       } else {
         set({ user: email });
-        localStorage.setItem("user", email);
       }
+      localStorage.setItem("user", email);
+
       return true;
     } else {
       set({ user: null });
@@ -24,7 +25,7 @@ const createUserSlice = (set, get) => ({
   },
 
   logout: () => {
-    set({ user: null, cities: [] });
+    set({ user: null, cities: [], tempUnit: "C" });
     localStorage.removeItem("user");
   },
 });

@@ -29,7 +29,10 @@ const createCitySlice = (set, get) => {
 
     removeCity: (cityName) => {
       if (!get().user) return;
-      const updatedCities = get().cities.filter((city) => city !== cityName);
+      const updatedCities = get().cities.filter(
+        (city) => city.name !== cityName
+      );
+
       set({ cities: updatedCities });
       localStorage.setItem(
         `cities:${get().user}`,

@@ -1,26 +1,59 @@
 import React from "react";
-import { Card, CardContent, CardHeader, Typography } from "@mui/material";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  Typography,
+  Grid,
+  IconButton,
+} from "@mui/material";
+import { RemoveCircle } from "@mui/icons-material";
 import useStore from "../../store/useStore";
+import WeatherIcon from "./WeatherIcon";
+import { Link } from "react-router-dom";
 
 const WeatherCard = ({ data }) => {
-  const tempUnit = useStore((state) => state.tempUnit); // Updated this to match the store object
+  const { removeCity, tempUnit } = useStore((state) => ({
+    removeCity: state.removeCity,
+    tempUnit: state.tempUnit,
+  }));
 
   return (
     <Card sx={{ minWidth: 275, margin: 2 }}>
-      <CardHeader title={data.name} /> {/* Updated to use data.name */}
-      <CardContent>
-        <Typography variant="body1" color="text.secondary" gutterBottom>
-          Current Temperature: {data[tempUnit].current}°{tempUnit}{" "}
-        </Typography>
-        <Typography variant="body1" color="text.secondary" gutterBottom>
-          High: {data[tempUnit].high}°{tempUnit} / Low: {data[tempUnit].low}°
-          {tempUnit}{" "}
-        </Typography>
-        <Typography variant="body1" color="text.secondary" gutterBottom>
-          Weather: {data.weather.description}{" "}
-          {/* Updated to use data.weather.description */}
-        </Typography>
-      </CardContent>
+      <CardHeader
+        title={data.name}
+        action={
+          <IconButton onClick={() => removeCity(data.name)} aria-label="Remove">
+            <RemoveCircle />
+          </IconButton>
+        }
+      />
+      <Link
+        to={`/cities/${data.name}?lat=${data.coord.lat}&lon=${data.coord.lon}`}
+        style={{ textDecoration: "none" }}
+      >
+        <CardContent>
+          <Typography variant="body1" color="text.secondary" gutterBottom>
+            Current Temperature: {data[tempUnit].current}°{tempUnit}
+          </Typography>
+          <Typography variant="body1" color="text.secondary" gutterBottom>
+            High: {data[tempUnit].high}°{tempUnit}
+          </Typography>
+          <Typography variant="body1" color="text.secondary" gutterBottom>
+            Low: {data[tempUnit].low}°{tempUnit}
+          </Typography>
+          <Grid container spacing={1}>
+            <Grid item>
+              <WeatherIcon code={data.weather.icon} />
+            </Grid>
+            <Grid item>
+              <Typography variant="body1" color="text.secondary" gutterBottom>
+                {data.weather.description}
+              </Typography>
+            </Grid>
+          </Grid>
+        </CardContent>
+      </Link>
     </Card>
   );
 };
