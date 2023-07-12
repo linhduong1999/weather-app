@@ -10,7 +10,7 @@ const Search = () => {
     onPlaceSelected: (place) => {
       setCity({
         lat: place.geometry.location.lat(),
-        lng: place.geometry.location.lng(),
+        lon: place.geometry.location.lng(),
         name: formatted_address,
       });
       console.log(place);

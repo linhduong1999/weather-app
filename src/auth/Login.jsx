@@ -1,16 +1,24 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import Alert from "@mui/material/Alert";
-
 import useUserStore from "../store/useUserStore";
+import { useNavigate } from "react-router-dom";
 
 const LoginForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
+  const user = useUserStore((state) => state.user);
+  const naviagate = useNavigate();
+
+  useEffect(() => {
+    if (user) {
+      naviagate("/cities");
+    }
+  }, [user]);
 
   const handleLogin = () => {
     if (!email || !password) {

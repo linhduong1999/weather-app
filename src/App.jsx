@@ -1,44 +1,22 @@
-import { lazy, useState, useEffect } from "react";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Outlet } from "react-router-dom";
-import Logout from "./auth/LogOut";
-import Search from "./pages/weather-list/Search"
-const WeatherList = lazy(() => import("./pages/weather-list/WeatherList.page"));
-const Login = () => import("./auth/Login.jsx");
+import useUserStore from "./store/useUserStore";
+import { Navigate } from "react-router-dom";
+import Logout from "./auth/LogOut"
 
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <Root />,
-    children: [
-      {
-        path: "cities",
-        element: <WeatherList />,
-      },
-      {
-        path: "cities/:citiesId",
-        element: <WeatherList />,
-      },
-    ],
-  },
-  {
-    path: "/login",
-    element: <Login />,
-  },
-]);
+const App = () => {
+  const user = useUserStore((state) => state.user);
 
-function App() {
-  return <RouterProvider router={router} />;
-}
-
-function Root() {
   return (
     <>
-      <Search />
-      <Logout />
-      <Outlet />
+      {user ? (
+        <>
+          <Logout />
+          <Outlet />
+        </>
+      ) : (
+        <Navigate to={"login"} />
+      )}
     </>
   );
-}
-
+};
 export default App;
