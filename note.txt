@@ -1,1 +1,22 @@
 - make sure all routes are protected
+
+-
+cities:linh@gmail.com
+[
+    {
+        name: "london",
+        lat: "31",
+        lon :"31,
+        weather: "main",
+        c: { //celcius
+            current: 21,
+            low:31,
+            high:33,
+        },
+        f: { // fahrenheit
+            current: 100,
+            low:90,
+            high:110,
+        }
+    }
+]

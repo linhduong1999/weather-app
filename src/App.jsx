@@ -1,10 +1,10 @@
 import { Outlet } from "react-router-dom";
-import useUserStore from "./store/useUserStore";
+import useStore from "./store/useStore";
 import { Navigate } from "react-router-dom";
-import Logout from "./auth/LogOut"
+import Logout from "./auth/LogOut";
 
 const App = () => {
-  const user = useUserStore((state) => state.user);
+  const user = useStore((state) => state.user);
 
   return (
     <>

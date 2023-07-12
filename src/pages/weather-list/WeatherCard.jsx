@@ -1,23 +1,24 @@
 import React from "react";
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import Typography from '@mui/material/Typography';
+import { Card, CardContent, CardHeader, Typography } from "@mui/material";
+import useStore from "../../store/useStore";
 
-const WeatherCard = ({ city, temperature, weather, highTemp, lowTemp }) => {
+const WeatherCard = ({ data }) => {
+  const tempUnit = useStore((state) => state.tempUnit); // Updated this to match the store object
+
   return (
-    <Card sx={{ minWidth: 275 }}>
+    <Card sx={{ minWidth: 275, margin: 2 }}>
+      <CardHeader title={data.name} /> {/* Updated to use data.name */}
       <CardContent>
-        <Typography variant="h5" component="div">
-          {city}
+        <Typography variant="body1" color="text.secondary" gutterBottom>
+          Current Temperature: {data[tempUnit].current}°{tempUnit}{" "}
         </Typography>
-        <Typography sx={{ fontSize: 14 }} color="text.secondary">
-          Temperature: {temperature}°C
+        <Typography variant="body1" color="text.secondary" gutterBottom>
+          High: {data[tempUnit].high}°{tempUnit} / Low: {data[tempUnit].low}°
+          {tempUnit}{" "}
         </Typography>
-        <Typography sx={{ fontSize: 14 }} color="text.secondary">
-          High: {highTemp}°C / Low: {lowTemp}°C
-        </Typography>
-        <Typography sx={{ fontSize: 14 }} color="text.secondary">
-          Weather: {weather}
+        <Typography variant="body1" color="text.secondary" gutterBottom>
+          Weather: {data.weather.description}{" "}
+          {/* Updated to use data.weather.description */}
         </Typography>
       </CardContent>
     </Card>

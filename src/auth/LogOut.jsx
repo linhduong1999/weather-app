@@ -1,9 +1,9 @@
 import React from "react";
 import Button from "@mui/material/Button";
-import useUserStore from "../store/useUserStore";
+import useStore from "../store/useStore";
 
 const Logout = () => {
-  const logout = useUserStore((state) => state.logout);
+  const logout = useStore((state) => state.logout);
 
   const handleLogout = () => {
     logout();
