@@ -1,6 +1,7 @@
 import React from "react";
-import Button from "@mui/material/Button";
+import { Typography } from "@mui/material";
 import useStore from "../store/useStore";
+import { styled } from "@mui/material/styles";
 
 const Logout = () => {
   const logout = useStore((state) => state.logout);
@@ -10,10 +11,20 @@ const Logout = () => {
   };
 
   return (
-    <Button variant="contained" color="primary" onClick={handleLogout}>
+    <StyledButton variant="button" onClick={handleLogout}>
       Logout
-    </Button>
+    </StyledButton>
   );
 };
 
+const StyledButton = styled(Typography)(
+  () => `
+    color: inherit;
+    background-color: transparent;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    outline: inherit;
+  `
+);
 export default Logout;

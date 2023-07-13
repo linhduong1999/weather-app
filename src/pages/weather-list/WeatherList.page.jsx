@@ -4,9 +4,13 @@ import WeatherCard from "./WeatherCard";
 import AddCity from "./AddCity";
 import useStore from "../../store/useStore";
 import { styled } from "@mui/material/styles";
+import { formatDate } from "../../utils/formatDate";
 
 const WeatherList = () => {
-  const cities = useStore((state) => state.cities);
+  const { user, cities } = useStore((state) => ({
+    user: state.user,
+    cities: state.cities,
+  }));
 
   return (
     <Box
@@ -15,7 +19,15 @@ const WeatherList = () => {
       flexGrow="1"
       maxWidth={"1300px"}
     >
-      <AddCity />
+      <StyledHeader display={"flex"} justifyContent={"space-between"}>
+        <Box>
+          <Typography variant="body1">Welcome, {user}</Typography>
+          <Typography variant="h5">
+            {formatDate(new Date()).dayOfWeek} {formatDate(new Date()).dateStr}
+          </Typography>
+        </Box>
+        <AddCity />
+      </StyledHeader>
       <CityListContainer display="flex" flexDirection="column" gap={3}>
         <Typography variant="h4">Your Cities</Typography>
         <Box display="flex" flexDirection="column" gap={3}>
@@ -48,6 +60,7 @@ const WeatherList = () => {
 
 const CityListContainer = styled(Box)(
   ({ theme }) => `
+  margin-top: ${theme.spacing(4)};
   padding: ${theme.spacing(4)};
   border : 1px solid #d9d9d9;
   border-radius: 15px;
@@ -55,4 +68,9 @@ const CityListContainer = styled(Box)(
 `
 );
 
+const StyledHeader = styled(Box)(
+  ({ theme }) => `
+  padding: ${theme.spacing(2)}
+`
+);
 export default WeatherList;

@@ -61,7 +61,7 @@ const StyledCard = styled(Box)(
   padding: ${theme.spacing(4)};
   border : 1px solid #d9d9d9;
   border-radius: 10px;
-  background-color: #1e215280;
+  background-color: #1e2152;
   position: relative;
   display: flex;
   flex-direction: column;

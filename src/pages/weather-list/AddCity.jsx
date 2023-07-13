@@ -1,9 +1,10 @@
-import React, { FC, RefObject, useRef, useState } from "react";
+import React from "react";
 import { TextField } from "@mui/material";
 import { usePlacesWidget } from "react-google-autocomplete";
 import { useGetCurrentForecast } from "../../api/weather-forecast/currentWeatherGetApi";
 import useStore from "../../store/useStore";
 import { getApiKeyGoogleAutocomplete } from "../../utils/environment";
+import { styled } from "@mui/material/styles";
 
 const AddCity = () => {
   const addCity = useStore((state) => state.addCity);
@@ -26,8 +27,7 @@ const AddCity = () => {
   });
 
   return (
-    <TextField
-      sx={{ width: "300px" }}
+    <StyledTextField
       color="secondary"
       variant="outlined"
       inputRef={materialRef}
@@ -37,3 +37,9 @@ const AddCity = () => {
 };
 AddCity;
 export default AddCity;
+
+const StyledTextField = styled(TextField)(
+  () => `
+    width: 400px;
+  `
+);
