@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Container, Typography, Alert, Button, TextField } from "@mui/material";
 import useStore from "../store/useStore";
 import { useNavigate } from "react-router-dom";
+import { styled } from "@mui/material/styles";
 
 const LoginForm = () => {
   const [email, setEmail] = useState("");
@@ -32,7 +33,7 @@ const LoginForm = () => {
   };
 
   return (
-    <Container maxWidth="xs">
+    <StyledContainer maxWidth="xs">
       <Typography variant="h4" align="center" gutterBottom>
         Login
       </Typography>
@@ -65,8 +66,16 @@ const LoginForm = () => {
           Login
         </Button>
       </form>
-    </Container>
+    </StyledContainer>
   );
 };
 
+const StyledContainer = styled(Container)(
+  ({ theme }) => `
+  min-height: 100vh;
+  display:flex;
+  flex-direction:column;
+  padding-top: 20vh;
+`
+);
 export default LoginForm;

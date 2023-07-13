@@ -1,7 +1,6 @@
 import React from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { lazy } from "react";
-import { Box } from "@mui/material";
 import { styled } from "@mui/material/styles";
 
 const WeatherList = lazy(() =>
@@ -17,9 +16,9 @@ const Setting = lazy(() => import("../pages/setting/Setting.page"));
 const AppWrapper = () => {
   return (
     <Container>
-      <BrowserRouter basename="/">
+      <BrowserRouter basename="/" exact>
         <Routes>
-          <Route path="/" element={<App />}>
+          <Route path="/" element={<App />} exact>
             <Route path="cities" element={<WeatherList />} />
             <Route path="cities/:cityId" element={<WeatherDetail />} />
             <Route path="setting" element={<Setting />} />

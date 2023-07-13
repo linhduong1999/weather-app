@@ -4,7 +4,7 @@ const createUserSlice = (set, get) => ({
   user: localStorage.getItem("user") || null,
 
   login: (email, password) => {
-    if (validateEmail(email) && password === "123") {
+    if (validateEmail(email) && password === "test1234") {
       const persistedCities = JSON.parse(
         localStorage.getItem(`cities:${email}`)
       );

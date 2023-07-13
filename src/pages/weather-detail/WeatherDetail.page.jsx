@@ -1,9 +1,10 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useLocation, Link } from "react-router-dom";
 import { useGetFiveDaysForecast } from "../../api/weather-forecast/fiveDaysWeatherGetApi";
-import { Button } from "@mui/material";
+import { Button, Box } from "@mui/material";
 import TemperatureChart from "./TemperatureChart";
 import useStore from "../../store/useStore";
+
 const WeatherDetail = () => {
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
@@ -11,7 +12,9 @@ const WeatherDetail = () => {
   const lon = queryParams.get("lon");
 
   const tempUnit = useStore((state) => state.tempUnit);
+
   const units = tempUnit === "C" ? "metric" : "imperial";
+  
   const { data, isLoading, isError } = useGetFiveDaysForecast(lat, lon, units);
 
   if (isLoading) {
@@ -23,12 +26,17 @@ const WeatherDetail = () => {
   }
 
   return (
-    <div>
+    <Box
+      display="flex"
+      flexDirection={"column"}
+      flexGrow="1"
+      maxWidth={"1300px"}
+    >
       <Link to="/cities">
         <Button>Back</Button>
       </Link>
       <TemperatureChart weatherData={data} />
-    </div>
+    </Box>
   );
 };
 

@@ -1,31 +1,60 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { Box, Typography } from "@mui/material";
 import { Link, useLocation } from "react-router-dom";
-import LogOut from "../auth/LogOut";
 import { styled } from "@mui/material/styles";
 import HomeIcon from "@mui/icons-material/Home";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import LoginOutlinedIcon from "@mui/icons-material/LoginOutlined";
+import useStore from "../store/useStore";
+
+const items = [
+  {
+    to: "/cities",
+    icon: <HomeIcon />,
+    label: "Home",
+  },
+  {
+    to: "/setting",
+    icon: <SettingsOutlinedIcon />,
+    label: "Setting",
+  },
+];
 
 const NavBar = () => {
   const location = useLocation();
+  const logout = useStore((state) => state.logout);
+
+  const handleLogout = () => {
+    logout();
+  };
+
+  const navItems = useMemo(() => {
+    return items.map((item) => (
+      <NavLink
+        key={item.to}
+        to={item.to}
+        active={location.pathname === item.to ? "true" : "false"}
+      >
+        {item.icon}
+        <Typography variant="button">{item.label}</Typography>
+      </NavLink>
+    ));
+  }, [location.pathname]);
 
   return (
     <NavContainer display="flex" flexDirection="column">
-      <Box display="flex" flexDirection={"column"} flexGrow={1} sx={{ gap: "8px" }}>
-        <NavLink to="/cities" active={location.pathname === "/cities"}>
-          <HomeIcon />
-          <Typography variant="button">Home</Typography>
-        </NavLink>
-        <NavLink to="/setting" active={location.pathname === "/setting"}>
-          <SettingsOutlinedIcon />
-          <Typography variant="button">Setting</Typography>{" "}
-        </NavLink>
+      <Box
+        display="flex"
+        flexDirection="column"
+        flexGrow={1}
+        sx={{ gap: "8px" }}
+      >
+        {navItems}
       </Box>
       <Box>
-        <NavLink>
+        <NavLink variant="button" onClick={handleLogout}>
           <LoginOutlinedIcon />
-          <LogOut />
+          <Typography variant="button">Log Out</Typography>
         </NavLink>
       </Box>
     </NavContainer>
@@ -58,11 +87,11 @@ const NavLink = styled(Link)(
 
     border-radius: 10px;
     height: 40px;
-    color: ${active ? "#ffffff" : "#000000"};
-    background-color: ${active ? "#070B47" : "white"};
+    color: ${active === "true" ? "#ffffff" : "#000000"};
+    background-color: ${active === "true" ? "#070B47" : "white"};
     text-decoration: none;
     &:hover {
-      background-color: ${active ? "#070B47" : "#070B4730"};
+      background-color: ${active === "true" ? "#070B47" : "#070B4730"};
     }
   `
 );
