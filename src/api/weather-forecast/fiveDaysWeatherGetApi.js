@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback, useMemo } from "react";
 import axios from "axios";
 import { getFiveDaysData } from "../../utils/transformData";
 import {
@@ -11,29 +11,34 @@ export const useGetFiveDaysForecast = (lat, lon, tempUnits) => {
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(getBaseUrlFiveDaysForcast(), {
-          params: {
-            lat: lat,
-            lon: lon,
-            units: tempUnits,
-            appid: getApiKeyOpenWeather(),
-          },
-        });
+  const fetchData = useCallback(async () => {
+    try {
+      const response = await axios.get(getBaseUrlFiveDaysForcast(), {
+        params: {
+          lat: lat,
+          lon: lon,
+          units: tempUnits,
+          appid: getApiKeyOpenWeather(),
+        },
+      });
 
-        const transformedData = getFiveDaysData(response.data.list);
-        setData(transformedData);
-        setIsLoading(false);
-      } catch (error) {
-        console.error("Error fetching data:", error.message);
-        setIsError(true);
-      }
-    };
-
-    fetchData();
+      const transformedData = getFiveDaysData(response.data.list);
+      setData(transformedData);
+      setIsLoading(false);
+    } catch (error) {
+      console.error("Error fetching data:", error.message);
+      setIsError(true);
+    }
   }, [lat, lon, tempUnits]);
 
-  return { data, isLoading, isError };
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
+
+  const memoizedData = useMemo(
+    () => ({ data, isLoading, isError }),
+    [data, isLoading, isError]
+  );
+
+  return memoizedData;
 };

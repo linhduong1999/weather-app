@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useCallback, useMemo } from "react";
 import axios from "axios";
 import { extractWeatherData } from "../../utils/transformData";
 import {
@@ -11,7 +11,7 @@ export const useGetCurrentForecast = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
 
-  const fetch = async (lat, lon) => {
+  const fetch = useCallback(async (lat, lon) => {
     try {
       setIsLoading(true);
       const response = await axios.get(getBaseUrlCurrentWeather(), {
@@ -30,7 +30,9 @@ export const useGetCurrentForecast = () => {
       setIsError(true);
       setIsLoading(false);
     }
-  };
+  }, []);
 
-  return { data, isLoading, isError, fetch };
+  const memoizedFetch = useMemo(() => fetch, [fetch]);
+
+  return { data, isLoading, isError, fetch: memoizedFetch };
 };
