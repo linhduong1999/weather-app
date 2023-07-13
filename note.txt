@@ -1,6 +1,6 @@
-- make sure all routes are protected
+- consider using react router dom
+- consider using useMemo and useCallBack
 
--
 cities:linh@gmail.com
 [
     {

@@ -18,7 +18,10 @@ const AddCity = () => {
 
   const { ref: materialRef } = usePlacesWidget({
     apiKey: import.meta.env.VITE_REACT_APP_GOOGLE,
-    onPlaceSelected: handleAdd,
+    onPlaceSelected: (place) => {
+      handleAdd(place);
+      materialRef.current.value = "";
+    },
     language: "en",
   });
 
