@@ -1,4 +1,3 @@
-import { useState, useCallback, useMemo } from "react";
 import axios from "axios";
 import { extractWeatherData } from "../../utils/transformData";
 import {
@@ -6,33 +5,21 @@ import {
   getBaseUrlCurrentWeather,
 } from "../../utils/environment";
 
-export const useGetCurrentForecast = () => {
-  const [data, setData] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
-  const [isError, setIsError] = useState(false);
+export const useGetCurrentForecast = async (lat, lon) => {
+  try {
+    const response = await axios.get(getBaseUrlCurrentWeather(), {
+      params: {
+        lat: lat,
+        lon: lon,
+        appid: getApiKeyOpenWeather(),
+      },
+    });
 
-  const fetch = useCallback(async (lat, lon) => {
-    try {
-      setIsLoading(true);
-      const response = await axios.get(getBaseUrlCurrentWeather(), {
-        params: {
-          lat: lat,
-          lon: lon,
-          appid: getApiKeyOpenWeather(),
-        },
-      });
+    const transformedData = extractWeatherData(response.data);
 
-      const transformedData = extractWeatherData(response.data);
-      setData(transformedData);
-      setIsLoading(false);
-    } catch (error) {
-      console.error("Error fetching data:", error.message);
-      setIsError(true);
-      setIsLoading(false);
-    }
-  }, []);
-
-  const memoizedFetch = useMemo(() => fetch, [fetch]);
-
-  return { data, isLoading, isError, fetch: memoizedFetch };
+    return transformedData; // Added return statement
+  } catch (error) {
+    window.alert("An error occurred while fetching the current forecast."); // Display the error message as a window alert
+    throw error;
+  }
 };

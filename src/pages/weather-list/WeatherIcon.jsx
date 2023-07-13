@@ -1,11 +1,4 @@
-import Brightness5Icon from "@mui/icons-material/Brightness5";
-import Brightness2Icon from "@mui/icons-material/Brightness2";
-import CloudIcon from "@mui/icons-material/Cloud";
-import CloudQueueIcon from "@mui/icons-material/CloudQueue";
-import GrainIcon from "@mui/icons-material/Grain";
-import StormIcon from "@mui/icons-material/Storm";
-import AcUnitIcon from "@mui/icons-material/AcUnit";
-import UmbrellaIcon from "@mui/icons-material/Umbrella";
+import { styled } from "@mui/material/styles";
 
 const WeatherIcon = ({ code }) => {
   const getImageUrl = (iconCode) => {
@@ -14,7 +7,21 @@ const WeatherIcon = ({ code }) => {
     return imageUrl;
   };
 
-  return <img src={getImageUrl(code)} alt="Weather Icon" />;
+  return (
+    <StyledImg
+      src={getImageUrl(code)}
+      alt="Weather Icon"
+      style={{ width: "40px", height: "40px" }}
+    />
+  );
 };
 
 export default WeatherIcon;
+
+const StyledImg = styled("img")(
+  () => `
+  width: 40px;
+  height: 40px;
+
+`
+);

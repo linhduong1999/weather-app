@@ -1,10 +1,18 @@
 import { formatDate } from "./formatDate";
 
 // Converts Kelvin to Celsius
-const toCelsius = (kelvin) => (kelvin - 273.15).toFixed(2);
+const toCelsius = (kelvin) => Math.round(kelvin - 273.15);
 
 // Converts Kelvin to Fahrenheit
-const toFahrenheit = (kelvin) => (((kelvin - 273.15) * 9) / 5 + 32).toFixed(2);
+const toFahrenheit = (kelvin) => Math.round(((kelvin - 273.15) * 9) / 5 + 32);
+
+export const capitalizeFirstLetter = (text) => {
+  const words = text.split(" ");
+  const capitalizedWords = words.map((word) => {
+    return word.charAt(0).toUpperCase() + word.slice(1);
+  });
+  return capitalizedWords.join(" ");
+};
 
 export const extractWeatherData = (data) => {
   return {
@@ -46,9 +54,5 @@ export const getFiveDaysData = (forecastData) => {
     minTempMin = Infinity;
     maxTempMax = -Infinity;
   }
-  console.log(
-    "🚀 ~ file: transformData.js:50 ~ getFiveDaysData ~ result:",
-    result
-  );
   return result;
 };

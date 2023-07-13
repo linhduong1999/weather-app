@@ -1,4 +1,3 @@
-- consider using react router dom
 - consider using useMemo and useCallBack
 
 cities:linh@gmail.com
@@ -20,3 +19,9 @@ cities:linh@gmail.com
         }
     }
 ]
+
+improvement:
+
+- right now can only add to view. improve so that user can view
+maybe on left side before add
+- usually temp switch should be on nav bar

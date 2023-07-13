@@ -8,10 +8,8 @@ import { getApiKeyGoogleAutocomplete } from "../../utils/environment";
 const AddCity = () => {
   const addCity = useStore((state) => state.addCity);
 
-  const { data, isLoading, isError, fetch } = useGetCurrentForecast();
-
   const handleAdd = async (place) => {
-    const city = await fetch(
+    const city = await useGetCurrentForecast(
       place.geometry.location.lat(),
       place.geometry.location.lng()
     );
@@ -29,10 +27,11 @@ const AddCity = () => {
 
   return (
     <TextField
-      fullWidth
+      sx={{ width: "300px" }}
       color="secondary"
       variant="outlined"
       inputRef={materialRef}
+      placeholder="Add a City"
     />
   );
 };
