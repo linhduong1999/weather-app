@@ -3,21 +3,23 @@ import { TextField } from "@mui/material";
 import { usePlacesWidget } from "react-google-autocomplete";
 import { useGetCurrentForecast } from "../../api/weather-forecast/currentWeatherGetApi";
 import useStore from "../../store/useStore";
+import { getApiKeyGoogleAutocomplete } from "../../utils/environment";
 
 const AddCity = () => {
   const addCity = useStore((state) => state.addCity);
 
+  const { data, isLoading, isError, fetch } = useGetCurrentForecast();
+
   const handleAdd = async (place) => {
-    const city = await useGetCurrentForecast(
+    const city = await fetch(
       place.geometry.location.lat(),
-      place.geometry.location.lng(),
-      place.formatted_address
+      place.geometry.location.lng()
     );
     addCity(city);
   };
 
   const { ref: materialRef } = usePlacesWidget({
-    apiKey: import.meta.env.VITE_REACT_APP_GOOGLE,
+    apiKey: getApiKeyGoogleAutocomplete(),
     onPlaceSelected: (place) => {
       handleAdd(place);
       materialRef.current.value = "";

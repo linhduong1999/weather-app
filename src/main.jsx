@@ -9,6 +9,6 @@ ReactDOM.createRoot(rootElement).render(
   <React.StrictMode>
     <Suspense fallback={<CircularProgress />}>
       <AppWrapper />
-    </Suspense>{" "}
+    </Suspense>
   </React.StrictMode>
 );

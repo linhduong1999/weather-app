@@ -1,27 +1,29 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { getFiveDaysData } from "../../utils/transformData";
+import {
+  getBaseUrlFiveDaysForcast,
+  getApiKeyOpenWeather,
+} from "../../utils/environment";
 
-const apiUrl = "https://api.openweathermap.org/data/2.5/forecast";
-
-export const useGetFiveDaysForecast = (lat, lon, tempUnits = "metric") => {
+export const useGetFiveDaysForecast = (lat, lon, tempUnits) => {
   const [data, setData] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isError, setIsError] = useState(false);
 
   useEffect(() => {
-    const getFiveDaysForecast = async () => {
+    const fetchData = async () => {
       try {
-        const response = await axios.get(apiUrl, {
+        const response = await axios.get(getBaseUrlFiveDaysForcast(), {
           params: {
             lat: lat,
             lon: lon,
             units: tempUnits,
-            appid: import.meta.env.VITE_REACT_APP_API_KEY,
+            appid: getApiKeyOpenWeather(),
           },
         });
-        const transformedData = getFiveDaysData(response.data.list);
 
+        const transformedData = getFiveDaysData(response.data.list);
         setData(transformedData);
         setIsLoading(false);
       } catch (error) {
@@ -30,7 +32,7 @@ export const useGetFiveDaysForecast = (lat, lon, tempUnits = "metric") => {
       }
     };
 
-    getFiveDaysForecast();
+    fetchData();
   }, [lat, lon, tempUnits]);
 
   return { data, isLoading, isError };

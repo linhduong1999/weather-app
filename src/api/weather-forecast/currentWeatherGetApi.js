@@ -1,23 +1,36 @@
+import { useState } from "react";
 import axios from "axios";
 import { extractWeatherData } from "../../utils/transformData";
+import {
+  getApiKeyOpenWeather,
+  getBaseUrlCurrentWeather,
+} from "../../utils/environment";
 
-const apiUrl = "https://api.openweathermap.org/data/2.5/weather";
+export const useGetCurrentForecast = () => {
+  const [data, setData] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isError, setIsError] = useState(false);
 
-export const useGetCurrentForecast = async (lat, lon) => {
-  try {
-    const response = await axios.get(apiUrl, {
-      params: {
-        lat: lat,
-        lon: lon,
-        appid: import.meta.env.VITE_REACT_APP_API_KEY,
-      },
-    });
+  const fetch = async (lat, lon) => {
+    try {
+      setIsLoading(true);
+      const response = await axios.get(getBaseUrlCurrentWeather(), {
+        params: {
+          lat: lat,
+          lon: lon,
+          appid: getApiKeyOpenWeather(),
+        },
+      });
 
-    const transformedData = extractWeatherData(response.data);
+      const transformedData = extractWeatherData(response.data);
+      setData(transformedData);
+      setIsLoading(false);
+    } catch (error) {
+      console.error("Error fetching data:", error.message);
+      setIsError(true);
+      setIsLoading(false);
+    }
+  };
 
-    return transformedData; // Added return statement
-  } catch (error) {
-    window.alert("An error occurred while fetching the current forecast."); // Display the error message as a window alert
-    throw error;
-  }
+  return { data, isLoading, isError, fetch };
 };
