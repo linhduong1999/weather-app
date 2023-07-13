@@ -46,9 +46,16 @@ const WeatherList = () => {
               flexDirection="column"
               alignItems="center"
               justifyContent="center"
+              paddingBottom={10}
             >
-              <Typography variant="h6" gutterBottom>
-                You haven't added any cities yet.
+              <img src="./emptyicon.png" />
+              <Typography
+                variant="h6"
+                width={250}
+                textAlign={"center"}
+                gutterBottom
+              >
+                There is nothing here. Please add your city.
               </Typography>
             </Box>
           )}
