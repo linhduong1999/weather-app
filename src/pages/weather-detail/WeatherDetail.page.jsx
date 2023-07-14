@@ -1,10 +1,12 @@
 import React from "react";
 import { useLocation, Link } from "react-router-dom";
 import { useGetFiveDaysForecast } from "../../api/weather-forecast/fiveDaysWeatherGetApi";
-import { Button, Box } from "@mui/material";
+import { Button } from "@mui/material";
 import Spinner from "../../components/Spinner";
 import TemperatureChart from "./TemperatureChart";
 import useStore from "../../store/useStore";
+import PageContentTemplate from "../../components/PageContentTemplate";
+import { PageTemplate } from "../../components/PageTemplate";
 
 const WeatherDetail = () => {
   const location = useLocation();
@@ -27,17 +29,14 @@ const WeatherDetail = () => {
   }
 
   return (
-    <Box
-      display="flex"
-      flexDirection={"column"}
-      flexGrow="1"
-      maxWidth={"1300px"}
-    >
+    <PageTemplate>
+      <PageContentTemplate title="Graph">
+        <TemperatureChart weatherData={data} />
+      </PageContentTemplate>
       <Link to="/cities">
         <Button>Back</Button>
       </Link>
-      <TemperatureChart weatherData={data} />
-    </Box>
+    </PageTemplate>
   );
 };
 

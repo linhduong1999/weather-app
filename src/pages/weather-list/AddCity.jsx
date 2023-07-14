@@ -40,7 +40,6 @@ const StyledTextField = styled(TextField)(
   ({ theme }) => `
     width: 400px;
     background-color: white;
-    : red;
     & .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline {
       border-color: ${theme.palette.primary.main};
     }

@@ -14,6 +14,8 @@ export const theme = createTheme({
     },
     secondary: {
       main: "#d9d9d9",
+      light: "#9f9f9f",
+      dark: "#536878",
     },
   },
   shape: {

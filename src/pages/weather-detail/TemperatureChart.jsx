@@ -11,6 +11,12 @@ import {
   Label,
   ResponsiveContainer,
 } from "recharts";
+import { theme } from "../../theme";
+
+const textStyle = {
+  textAnchor: "middle",
+  fontFamily: theme.typography.fontFamily,
+};
 
 const TemperatureChart = ({ weatherData }) => {
   const tempUnit = useStore((state) => state.tempUnit);
@@ -19,7 +25,7 @@ const TemperatureChart = ({ weatherData }) => {
     <ResponsiveContainer width="100%" height={400}>
       <BarChart
         data={weatherData}
-        style={{ textAnchor: "middle", fontFamily: "'Roboto', sans-serif" }}
+        style={textStyle}
         margin={{
           top: 20,
           right: 30,
@@ -35,16 +41,21 @@ const TemperatureChart = ({ weatherData }) => {
             position="left"
             angle={-90}
             offset={20}
-            style={{ textAnchor: "middle", fontFamily: "'Roboto', sans-serif" }}
+            style={textStyle}
           />
         </YAxis>
-        <Tooltip
-          contentStyle={{ fontFamily: "'Roboto', sans-serif" }}
-          labelStyle={{ fontFamily: "'Roboto', sans-serif" }}
-        />
+        <Tooltip contentStyle={textStyle} labelStyle={textStyle} />
         <Legend />
-        <Bar dataKey="high" fill="#ff6f00" name="High Temperature" />
-        <Bar dataKey="low" fill="#50a1ff" name="Low Temperature" />
+        <Bar
+          dataKey="high"
+          fill={theme.palette.secondary.dark}
+          name="High Temperature"
+        />
+        <Bar
+          dataKey="low"
+          fill={theme.palette.secondary.light}
+          name="Low Temperature"
+        />
       </BarChart>
     </ResponsiveContainer>
   );

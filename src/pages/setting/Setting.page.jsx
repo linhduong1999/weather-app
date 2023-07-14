@@ -1,22 +1,16 @@
 import React from "react";
 import TempUnitToggle from "./TempUnitToggle";
-import PageTemplate from "../../components/PageTemplate";
-import { styled } from "@mui/material/styles";
+import PageContentTemplate from "../../components/PageContentTemplate";
+import { PageTemplate } from "../../components/PageTemplate";
 
 const Setting = () => {
   return (
-    <StyledContainer>
-      <PageTemplate title={"Settings"}>
+    <PageTemplate>
+      <PageContentTemplate title={"Settings"}>
         <TempUnitToggle />
-      </PageTemplate>
-    </StyledContainer>
+      </PageContentTemplate>
+    </PageTemplate>
   );
 };
 
 export default Setting;
-
-const StyledContainer = styled("div")`
-  flex-grow: 1;
-  flex-direction: row;
-  max-width: 1300px;
-`;
