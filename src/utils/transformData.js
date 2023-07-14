@@ -36,23 +36,28 @@ export const getFiveDaysData = (forecastData) => {
   const result = [];
   let minTempMin = Infinity;
   let maxTempMax = -Infinity;
+  let currentTemp = 0;
 
-  // get max and min of the day
+  // get max and min and calculate current temp of the day
   for (let i = 0; i < forecastData.length; i += 8) {
     for (let j = i; j < i + 8; j++) {
       const item = forecastData[j];
       minTempMin = Math.min(minTempMin, item.main.temp_min);
       maxTempMax = Math.max(maxTempMax, item.main.temp_max);
+      currentTemp += item.main.temp;
     }
-
+    currentTemp = currentTemp / 8;
     result.push({
-      low: minTempMin,
-      high: maxTempMax,
+      current: Math.round(currentTemp),
+      low: Math.round(minTempMin),
+      high: Math.round(maxTempMax),
       date: formatDate(forecastData[i].dt_txt),
-      weather: forecastData[i].weather,
+      dt: forecastData[i].dt,
+      weather: forecastData[i].weather[0],
     });
     minTempMin = Infinity;
     maxTempMax = -Infinity;
+    currentTemp = 0;
   }
   return result;
 };

@@ -3,7 +3,7 @@ import { Typography } from "@mui/material";
 import Link from "./Link";
 import { styled } from "@mui/material/styles";
 
-import { matchPath, useLocation } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 const NavItems = React.memo(({ items }) => {
   const location = useLocation();

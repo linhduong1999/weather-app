@@ -1,7 +1,10 @@
 import { styled } from "@mui/material/styles";
 
-export const PageTemplate = styled("div")`
+export const PageTemplate = styled("div")(
+  ({ theme }) => `
+  display:flex;
   flex-grow: 1;
-  flex-direction: row;
-  max-width: 1300px;
-`;
+  flex-direction: column;
+  gap: ${theme.spacing(4)};
+`
+);

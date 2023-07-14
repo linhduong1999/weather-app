@@ -2,8 +2,12 @@ export const getBaseUrlFiveDaysForcast = () => {
   return import.meta.env.VITE_REACT_FIVE_DAY_FORECAST;
 };
 
-export const getBaseUrlCurrentWeather= () => {
+export const getBaseUrlCurrentWeather = () => {
   return import.meta.env.VITE_REACT_CURRENT_WEATHER;
+};
+
+export const getBaseUrlWeatherIcon = () => {
+  return import.meta.env.VITE_REACT_WEATHER_ICON;
 };
 
 export const getApiKeyOpenWeather = () => {
@@ -13,3 +17,5 @@ export const getApiKeyOpenWeather = () => {
 export const getApiKeyGoogleAutocomplete = () => {
   return import.meta.env.VITE_REACT_APP_GOOGLE_MAP_AUTOCOMPLETE;
 };
+
+

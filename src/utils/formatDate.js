@@ -1,6 +1,5 @@
 export const formatDate = (dateString) => {
   const date = new Date(dateString);
-  const today = new Date();
 
   // Get the day of the week
   const options = { weekday: "long" };
@@ -21,4 +20,10 @@ export const getFormattedDate = (date) => {
   const formattedDayOfWeek = formatDate(date).dayOfWeek;
   const formattedDateStr = formatDate(date).dateStr;
   return `${formattedDayOfWeek} ${formattedDateStr}`;
+};
+
+export const isToday = (timestamp) => {
+  const today = new Date();
+  const targetDate = new Date(timestamp * 1000);
+  return today.toDateString() === targetDate.toDateString();
 };

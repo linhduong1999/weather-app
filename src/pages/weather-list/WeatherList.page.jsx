@@ -17,7 +17,7 @@ const WeatherList = () => {
       <HeaderContainer>
         <Box>
           <Typography variant="body1">Welcome, {user}</Typography>
-          <Typography variant="h5">{getFormattedDate(new Date())}</Typography>
+          <Typography variant="h5">Today is {getFormattedDate(new Date())}</Typography>
         </Box>
         <AddCity />
       </HeaderContainer>
@@ -40,14 +40,12 @@ const WeatherList = () => {
   );
 };
 
-
 const HeaderContainer = styled(Box)(
   ({ theme }) => `
   display: flex;
   justify-content: space-between;
   padding: ${theme.spacing(2)};
-  margin-bottom: ${theme.spacing(4)};
-
+  padding-right:0;
 `
 );
 

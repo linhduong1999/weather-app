@@ -1,6 +1,7 @@
 - consider using useMemo and useCallBack
 - adding alert
 - rid of anything that use px
+- sticky for Back and add city
 
 cities:linh@gmail.com
 [

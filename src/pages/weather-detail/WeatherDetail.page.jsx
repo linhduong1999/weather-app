@@ -1,43 +1,85 @@
-import React from "react";
-import { useLocation, Link } from "react-router-dom";
+import React, { Fragment, useMemo, useCallback } from "react";
+import { useLocation } from "react-router-dom";
 import { useGetFiveDaysForecast } from "../../api/weather-forecast/fiveDaysWeatherGetApi";
-import { Button } from "@mui/material";
+import { Button, Stack } from "@mui/material";
 import Spinner from "../../components/Spinner";
 import TemperatureChart from "./TemperatureChart";
 import useStore from "../../store/useStore";
 import PageContentTemplate from "../../components/PageContentTemplate";
 import { PageTemplate } from "../../components/PageTemplate";
+import { styled } from "@mui/material/styles";
+import CurrentCity from "./CurrentCity";
+import FiveDaysForecast from "./FiveDaysForecast";
+import Link from "../../components/Link";
 
 const WeatherDetail = () => {
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
-  const lat = queryParams.get("lat");
-  const lon = queryParams.get("lon");
+  const lat = queryParams.get("lat") ?? "";
+  const lon = queryParams.get("lon") ?? "";
 
-  const tempUnit = useStore((state) => state.tempUnit);
+  const { tempUnit, cities } = useStore(({ tempUnit, cities }) => ({
+    tempUnit,
+    cities,
+  }));
 
-  const units = tempUnit === "C" ? "metric" : "imperial";
+  const units = useMemo(
+    () => (tempUnit === "C" ? "metric" : "imperial"),
+    [tempUnit]
+  );
+
+  const currentCity = useMemo(
+    () => cities.find((city) => city.coord.lat == lat && city.coord.lon == lon),
+    [cities, lat, lon]
+  );
 
   const { data, isLoading, isError } = useGetFiveDaysForecast(lat, lon, units);
 
-  if (isLoading) {
-    return <Spinner />;
-  }
+  const renderContent = useCallback(() => {
+    if (isLoading) {
+      return <Spinner />;
+    }
 
-  if (isError) {
-    return <div>Error fetching data</div>;
-  }
+    if (isError) {
+      return <div>Error fetching data</div>;
+    }
 
-  return (
-    <PageTemplate>
-      <PageContentTemplate title="Graph">
-        <TemperatureChart weatherData={data} />
-      </PageContentTemplate>
-      <Link to="/cities">
-        <Button>Back</Button>
-      </Link>
-    </PageTemplate>
-  );
+    return (
+      <Fragment>
+        <Link to="/cities">
+          <StyledButton>Back to Cities</StyledButton>
+        </Link>
+        <CustomPageContentTemplate>
+          <CurrentCity data={currentCity} />
+        </CustomPageContentTemplate>
+        <PageContentTemplate title="5 Days ForeCast">
+          <FiveDaysForecast weatherData={data} />
+        </PageContentTemplate>
+        <PageContentTemplate title="Graph">
+          <TemperatureChart weatherData={data} />
+        </PageContentTemplate>
+      </Fragment>
+    );
+  }, [isLoading, isError, currentCity, data]);
+
+  return <PageTemplate>{renderContent()}</PageTemplate>;
 };
+
+const StyledButton = styled(Button)(({ theme }) => ({
+  padding: theme.spacing(2),
+  borderRadius: theme.shape.borderRadius.s,
+  color: theme.palette.common.white,
+  backgroundColor: theme.palette.primary.main,
+  "&:hover": {
+    color: theme.palette.primary.main,
+    backgroundColor: theme.palette.secondary.main,
+  },
+}));
+
+const CustomPageContentTemplate = styled(Stack)`
+  border: 1px solid ${({ theme }) => theme.palette.secondary.main};
+  border-radius: ${({ theme }) => theme.shape.borderRadius.m};
+  background-color: ${({ theme }) => theme.palette.common.white};
+`;
 
 export default WeatherDetail;

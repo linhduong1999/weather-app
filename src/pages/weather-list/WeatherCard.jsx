@@ -2,7 +2,7 @@ import ClearIcon from "@mui/icons-material/Clear";
 import React from "react";
 import { Typography, Box, IconButton } from "@mui/material";
 import useStore from "../../store/useStore";
-import WeatherIcon from "./WeatherIcon";
+import WeatherIcon from "../../components/WeatherIcon";
 import { styled } from "@mui/material/styles";
 import Link from "../../components/Link";
 import { capitalizeFirstLetter } from "../../utils/transformData";
@@ -25,7 +25,6 @@ const WeatherCard = React.memo(({ data }) => {
       </RemoveIconButton>
 
       <Link to={`/cities/${name}?lat=${coord.lat}&lon=${coord.lon}`}>
-        {/* Content */}
         <ContentContainer>
           <LeftContent>
             <Typography variant="h4" color="common.white">

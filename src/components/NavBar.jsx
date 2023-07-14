@@ -49,12 +49,12 @@ const NavBar = () => {
 };
 
 const NavContainer = styled(Box)(({ theme }) => ({
+  position: "fixed",
   minWidth: "200px",
-  minHeight: `calc(100vh - ${theme.spacing(8)})`,
+  minHeight: `calc(100vh - ${theme.spacing(2)})`,
   borderRadius: theme.shape.borderRadius.m,
   backgroundColor: theme.palette.common.white,
   padding: theme.spacing(2),
-  marginRight: theme.spacing(2),
   border: `1px solid ${theme.palette.secondary.main}`,
   display: "flex",
   flexDirection: "column",
