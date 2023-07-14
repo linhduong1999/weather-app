@@ -1,11 +1,12 @@
 import React, { useMemo } from "react";
-import { Box, Typography } from "@mui/material";
-import { Link, useLocation } from "react-router-dom";
+import { Box, Typography, Stack } from "@mui/material";
+import { useLocation } from "react-router-dom";
 import { styled } from "@mui/material/styles";
 import HomeIcon from "@mui/icons-material/Home";
 import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import LoginOutlinedIcon from "@mui/icons-material/LoginOutlined";
 import useStore from "../store/useStore";
+import NavItems, { NavLink } from "./NavItem";
 
 const items = [
   {
@@ -29,28 +30,14 @@ const NavBar = () => {
   };
 
   const navItems = useMemo(() => {
-    return items.map((item) => (
-      <NavLink
-        key={item.to}
-        to={item.to}
-        active={location.pathname === item.to ? "true" : "false"}
-      >
-        {item.icon}
-        <Typography variant="button">{item.label}</Typography>
-      </NavLink>
-    ));
-  }, [location.pathname]);
+    return <NavItems items={items} location={location} />;
+  }, [items, location.pathname, logout]);
 
   return (
     <NavContainer display="flex" flexDirection="column">
-      <Box
-        display="flex"
-        flexDirection="column"
-        flexGrow={1}
-        sx={{ gap: "8px" }}
-      >
+      <Stack flexGrow={1} spacing={2}>
         {navItems}
-      </Box>
+      </Stack>
       <Box>
         <NavLink variant="button" onClick={handleLogout}>
           <LoginOutlinedIcon />
@@ -61,39 +48,16 @@ const NavBar = () => {
   );
 };
 
-const NavContainer = styled(Box)(
-  ({ theme }) => `
-    min-width: 200px;
-    min-height: calc(100vh - 64px ); /* Subtract header margin height */
-    border-radius: 15px;
-    background-color: #ffffff;
-    padding: ${theme.spacing(2)};
-    margin-right:${theme.spacing(2)};
-    border : 1px solid #d9d9d9;
-    display: flex;
-    flex-direction: column;
-  `
-);
-
-const NavLink = styled(Link)(
-  ({ theme, active }) => `
-    display:flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content:space-between;
-    padding: ${theme.spacing(1)} ${theme.spacing(4)} ${theme.spacing(
-    1
-  )} ${theme.spacing(4)};
-
-    border-radius: 10px;
-    height: 40px;
-    color: ${active === "true" ? "#ffffff" : "#000000"};
-    background-color: ${active === "true" ? "#070B47" : "white"};
-    text-decoration: none;
-    &:hover {
-      background-color: ${active === "true" ? "#070B47" : "#070B4730"};
-    }
-  `
-);
+const NavContainer = styled(Box)(({ theme }) => ({
+  minWidth: "200px",
+  minHeight: `calc(100vh - ${theme.spacing(8)})`,
+  borderRadius: theme.shape.borderRadius.m,
+  backgroundColor: theme.palette.common.white,
+  padding: theme.spacing(2),
+  marginRight: theme.spacing(2),
+  border: `1px solid ${theme.palette.secondary.main}`,
+  display: "flex",
+  flexDirection: "column",
+}));
 
 export default NavBar;

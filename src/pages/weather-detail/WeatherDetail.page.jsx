@@ -2,6 +2,7 @@ import React from "react";
 import { useLocation, Link } from "react-router-dom";
 import { useGetFiveDaysForecast } from "../../api/weather-forecast/fiveDaysWeatherGetApi";
 import { Button, Box } from "@mui/material";
+import Spinner from "../../components/Spinner";
 import TemperatureChart from "./TemperatureChart";
 import useStore from "../../store/useStore";
 
@@ -14,11 +15,11 @@ const WeatherDetail = () => {
   const tempUnit = useStore((state) => state.tempUnit);
 
   const units = tempUnit === "C" ? "metric" : "imperial";
-  
+
   const { data, isLoading, isError } = useGetFiveDaysForecast(lat, lon, units);
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <Spinner />;
   }
 
   if (isError) {

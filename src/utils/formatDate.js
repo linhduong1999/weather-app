@@ -15,3 +15,10 @@ export const formatDate = (dateString) => {
 
   return { dayOfWeek, dateStr };
 };
+
+// Helper function to format the date
+export const getFormattedDate = (date) => {
+  const formattedDayOfWeek = formatDate(date).dayOfWeek;
+  const formattedDateStr = formatDate(date).dateStr;
+  return `${formattedDayOfWeek} ${formattedDateStr}`;
+};

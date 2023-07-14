@@ -4,44 +4,46 @@ import { Typography, Box, IconButton } from "@mui/material";
 import useStore from "../../store/useStore";
 import WeatherIcon from "./WeatherIcon";
 import { styled } from "@mui/material/styles";
-import { Link } from "react-router-dom";
+import Link from "../../components/Link";
 import { capitalizeFirstLetter } from "../../utils/transformData";
 
-const WeatherCard = ({ data }) => {
+const WeatherCard = React.memo(({ data }) => {
+  const { name, weather, coord } = data;
   const { removeCity, tempUnit } = useStore((state) => ({
     removeCity: state.removeCity,
     tempUnit: state.tempUnit,
   }));
 
+  const handleRemoveCity = React.useCallback(() => {
+    removeCity(name);
+  }, [removeCity, name]);
+
   return (
-    <StyledCard>
-      <StyledIconButton
-        onClick={() => removeCity(data.name)}
-        aria-label="Remove"
-      >
+    <CardContainer>
+      <RemoveIconButton onClick={handleRemoveCity} aria-label="Remove">
         <ClearIcon />
-      </StyledIconButton>
-      <Link
-        to={`/cities/${data.name}?lat=${data.coord.lat}&lon=${data.coord.lon}`}
-        style={{ textDecoration: "none" }}
-      >
-        <InnerBox>
-          <Box>
+      </RemoveIconButton>
+
+      <Link to={`/cities/${name}?lat=${coord.lat}&lon=${coord.lon}`}>
+        {/* Content */}
+        <ContentContainer>
+          <LeftContent>
             <Typography variant="h4" color="common.white">
-              {data.name}
+              {name}
             </Typography>
             <Box display="flex" alignItems="center">
-              <WeatherIcon code={data.weather.icon} />
+              <WeatherIcon code={weather.icon} />
               <Typography variant="body1" color="common.white">
-                {capitalizeFirstLetter(data.weather.description)}
+                {capitalizeFirstLetter(weather.description)}
               </Typography>
             </Box>
-          </Box>
-          <Box>
+          </LeftContent>
+
+          <RightContent>
             <Typography variant="h3" color="common.white">
               {data[tempUnit].current}°{tempUnit}
             </Typography>
-            <Box display="flex" sx={{ gap: "8px" }}>
+            <Box display="flex" gap={2}>
               <Typography variant="body1" color="common.white">
                 L: {data[tempUnit].low}°{tempUnit}
               </Typography>
@@ -49,41 +51,54 @@ const WeatherCard = ({ data }) => {
                 H: {data[tempUnit].high}°{tempUnit}
               </Typography>
             </Box>
-          </Box>
-        </InnerBox>
+          </RightContent>
+        </ContentContainer>
       </Link>
-    </StyledCard>
+    </CardContainer>
   );
-};
+});
 
-const StyledCard = styled(Box)(
+// Styled components
+const CardContainer = styled(Box)(
   ({ theme }) => `
-  padding: ${theme.spacing(4)};
-  border : 1px solid #d9d9d9;
-  border-radius: 10px;
-  background-color: #1e2152;
-  position: relative;
-  display: flex;
-  flex-direction: column;
+    padding: ${theme.spacing(4)};
+    border : 1px solid ${theme.palette.secondary.main};
+    border-radius: ${theme.shape.borderRadius.s};
+    background-color: ${theme.palette.primary.main};
+    position: relative;
+    display: flex;
+    flex-direction: column;
 `
 );
 
-const StyledIconButton = styled(IconButton)(
+const RemoveIconButton = styled(IconButton)(
   ({ theme }) => `
   position: absolute;
   top: ${theme.spacing(1)};
   right: ${theme.spacing(1)};
-  color: white;
+  color: ${theme.palette.common.white};
 `
 );
 
-const InnerBox = styled(Box)(
+const ContentContainer = styled(Box)(
   () => `
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
   margin-right: 20px;
+`
+);
+
+const LeftContent = styled(Box)(
+  () => `
+  flex: 4;
+`
+);
+
+const RightContent = styled(Box)(
+  () => `
+  flex: 1;
 `
 );
 

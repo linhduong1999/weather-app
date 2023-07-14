@@ -1,34 +1,73 @@
 import React from "react";
-import { ToggleButton, ToggleButtonGroup } from "@mui/material";
+import {
+  ToggleButton,
+  ToggleButtonGroup,
+  Typography,
+  Box,
+} from "@mui/material";
 import useStore from "../../store/useStore";
+import { styled } from "@mui/material/styles";
+import { theme } from "../../theme";
 
 const TemperatureToggle = () => {
-  const { tempUnit, toggleUnit } = useStore((state) => ({
-    tempUnit: state.tempUnit,
-    toggleUnit: state.toggleUnit,
+  const { tempUnit, toggleUnit } = useStore(({ tempUnit, toggleUnit }) => ({
+    tempUnit,
+    toggleUnit,
   }));
 
   const handleToggle = (event, newUnit) => {
     if (newUnit !== null) {
-        toggleUnit(newUnit);
+      toggleUnit(newUnit);
     }
   };
 
   return (
-    <ToggleButtonGroup
-      value={tempUnit}
-      exclusive
-      onChange={handleToggle}
-      aria-label="temperature"
-    >
-      <ToggleButton value="C" aria-label="Celsius">
-        Celsius
-      </ToggleButton>
-      <ToggleButton value="F" aria-label="Fahrenheit">
-        Fahrenheit
-      </ToggleButton>
-    </ToggleButtonGroup>
+    <UnitContainer>
+      <Typography variant="body1">Temperature Unit</Typography>
+      <StyledToggleButtonGroup
+        value={tempUnit}
+        exclusive
+        onChange={handleToggle}
+        aria-label="temperature"
+      >
+        <StyledToggleButton value="C" aria-label="Celsius">
+          Celsius
+        </StyledToggleButton>
+        <StyledToggleButton value="F" aria-label="Fahrenheit">
+          Fahrenheit
+        </StyledToggleButton>
+      </StyledToggleButtonGroup>
+    </UnitContainer>
   );
 };
+
+const UnitContainer = styled(Box)(
+  () => `
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  `
+);
+
+const StyledToggleButtonGroup = styled(ToggleButtonGroup)`
+  border-radius: ${theme.shape.borderRadius.s};
+  border: 1px solid ${theme.palette.secondary.main};
+  overflow: hidden;
+
+  .MuiToggleButton-root {
+    border: none;
+    &:hover:not(.Mui-selected) {
+      background-color: ${theme.palette.primary.light};
+      border-radius: ${theme.shape.borderRadius.s};
+    }
+    &.Mui-selected {
+      color: ${theme.palette.common.white};
+      background-color: ${theme.palette.primary.main};
+      border-radius: ${theme.shape.borderRadius.s};
+    }
+  }
+`;
+
+const StyledToggleButton = styled(ToggleButton)``;
 
 export default TemperatureToggle;

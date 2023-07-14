@@ -1,18 +1,22 @@
 import React from "react";
 import TempUnitToggle from "./TempUnitToggle";
-import { Box } from "@mui/material";
+import PageTemplate from "../../components/PageTemplate";
+import { styled } from "@mui/material/styles";
 
 const Setting = () => {
   return (
-    <Box
-      display="flex"
-      flexDirection={"column"}
-      flexGrow="1"
-      maxWidth={"1300px"}
-    >
-      <TempUnitToggle />
-    </Box>
+    <StyledContainer>
+      <PageTemplate title={"Settings"}>
+        <TempUnitToggle />
+      </PageTemplate>
+    </StyledContainer>
   );
 };
 
 export default Setting;
+
+const StyledContainer = styled("div")`
+  flex-grow: 1;
+  flex-direction: row;
+  max-width: 1300px;
+`;

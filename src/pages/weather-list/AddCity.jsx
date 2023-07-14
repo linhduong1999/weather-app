@@ -35,11 +35,22 @@ const AddCity = () => {
     />
   );
 };
-AddCity;
-export default AddCity;
 
 const StyledTextField = styled(TextField)(
-  () => `
+  ({ theme }) => `
     width: 400px;
+    background-color: white;
+    : red;
+    & .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline {
+      border-color: ${theme.palette.primary.main};
+    }
+    & .MuiOutlinedInput-notchedOutline {
+      border-radius: ${theme.shape.borderRadius.s};
+    }
+    & .MuiInputBase-input {
+      color: ${theme.palette.primary.main};
+    }
   `
 );
+
+export default AddCity;

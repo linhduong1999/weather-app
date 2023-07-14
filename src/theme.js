@@ -3,14 +3,23 @@ import { createTheme } from "@mui/material/styles";
 export const theme = createTheme({
   typography: {
     fontFamily: "Poppins, sans-serif",
-    color: "#070B47", // Set the default color for typography
+    allVariants: {
+      color: "#070B47",
+    },
   },
   palette: {
     primary: {
       main: "#070B47",
+      light: "#070B4730",
     },
-    text: {
-      primary: "#070B47", // Set the default color for text
+    secondary: {
+      main: "#d9d9d9",
+    },
+  },
+  shape: {
+    borderRadius: {
+      s: "10px",
+      m: "15px",
     },
   },
 });
