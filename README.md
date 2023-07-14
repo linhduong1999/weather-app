@@ -4,13 +4,15 @@ This Weather App is a React-based web application that allows users to view weat
 
 ## Installation
 
-- Clone the repository: git clone [repository-url]
+- Clone the repository: git clone https://github.com/linhduong1999/weather-app.git
 - Navigate to the project directory: cd weather-app
 - Add ".env" file the root of the project
 - Install dependencies: npm install
 - Start the development server: npm start
 - Open the application in your browser: http://localhost:5173
 - Login with any valid email with a password of "test1234".
+
+Please note that the ".env" file contains all the necessary API key and base URL information needed for the app to run. Make sure to create an ".env" file with the required values before running the application.
 
 ## Features
 
