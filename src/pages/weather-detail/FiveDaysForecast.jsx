@@ -19,7 +19,7 @@ const FiveDaysForecast = ({ weatherData }) => {
     (data, index) => (
       <TableRow key={index}>
         <StyledTableCell>
-          {isToday(data.dt) ? "Today" : data.date.dateStr}
+          {isToday(data.dt) ? "Today" : data.date.dayOfWeek}
         </StyledTableCell>
         <StyledTableCell>{data.date.dateStr}</StyledTableCell>
         <StyledTableCell>

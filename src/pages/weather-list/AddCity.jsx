@@ -31,7 +31,7 @@ const AddCity = () => {
       color="secondary"
       variant="outlined"
       inputRef={materialRef}
-      placeholder="Add a City"
+      placeholder="Search to Add a City"
     />
   );
 };
@@ -39,7 +39,7 @@ const AddCity = () => {
 const StyledTextField = styled(TextField)(
   ({ theme }) => `
     width: 400px;
-    
+
     & .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline {
       border-color: ${theme.palette.primary.main};
     }
