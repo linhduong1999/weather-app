@@ -12,7 +12,7 @@ node_modules/
 *.iws
 *.log
 
-# Environment variables
+# Environment
 *.env
 
 # Log files
