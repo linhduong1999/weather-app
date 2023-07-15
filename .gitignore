@@ -14,7 +14,7 @@ node_modules/
 *.txt
 
 # Environment
-*.env
+.env
 
 # Log files
 npm-debug.log*
