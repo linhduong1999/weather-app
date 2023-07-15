@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import {
   ToggleButton,
   ToggleButtonGroup,
@@ -21,9 +21,8 @@ const TemperatureToggle = () => {
     }
   };
 
-  return (
-    <UnitContainer>
-      <Typography variant="body1">Temperature Unit</Typography>
+  const memoizedToggleButtonGroup = useMemo(
+    () => (
       <StyledToggleButtonGroup
         value={tempUnit}
         exclusive
@@ -37,6 +36,14 @@ const TemperatureToggle = () => {
           Fahrenheit
         </StyledToggleButton>
       </StyledToggleButtonGroup>
+    ),
+    [tempUnit, handleToggle]
+  );
+
+  return (
+    <UnitContainer>
+      <Typography variant="body1">Temperature Unit</Typography>
+      {memoizedToggleButtonGroup}
     </UnitContainer>
   );
 };
@@ -70,4 +77,4 @@ const StyledToggleButtonGroup = styled(ToggleButtonGroup)`
 
 const StyledToggleButton = styled(ToggleButton)``;
 
-export default TemperatureToggle;
+export default React.memo(TemperatureToggle);

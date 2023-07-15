@@ -9,14 +9,13 @@ import {
 import { styled } from "@mui/system";
 import WeatherIcon from "../../components/WeatherIcon";
 import { capitalizeFirstLetter } from "../../utils/transformData";
-
 import { isToday } from "../../utils/formatDate";
 
 const tableHeaders = ["Day", "Date", "State", "Weather", "Low", "High"];
 
 const FiveDaysForecast = ({ weatherData }) => {
-  const renderWeatherRow = useCallback(
-    (data, index) => (
+  const renderWeatherRow = useCallback((data, index) => {
+    return (
       <TableRow key={index}>
         <StyledTableCell>
           {isToday(data.dt) ? "Today" : data.date.dayOfWeek}
@@ -31,14 +30,12 @@ const FiveDaysForecast = ({ weatherData }) => {
         <StyledTableCell>{data.low}°</StyledTableCell>
         <StyledTableCell>{data.high}°</StyledTableCell>
       </TableRow>
-    ),
-    []
-  );
+    );
+  }, []);
 
-  const renderTableRows = useMemo(
-    () => weatherData.map(renderWeatherRow),
-    [weatherData, renderWeatherRow]
-  );
+  const renderTableRows = useMemo(() => {
+    return weatherData.map(renderWeatherRow);
+  }, [weatherData, renderWeatherRow]);
 
   return (
     <Table>
@@ -67,4 +64,4 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
   color: theme.palette.primary.main,
 }));
 
-export default FiveDaysForecast;
+export default React.memo(FiveDaysForecast);

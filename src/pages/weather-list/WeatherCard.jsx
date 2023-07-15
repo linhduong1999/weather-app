@@ -7,7 +7,7 @@ import { styled } from "@mui/material/styles";
 import Link from "../../components/Link";
 import { capitalizeFirstLetter } from "../../utils/transformData";
 
-const WeatherCard = React.memo(({ data }) => {
+const WeatherCard = ({ data }) => {
   const { name, weather, coord } = data;
   const { removeCity, tempUnit } = useStore((state) => ({
     removeCity: state.removeCity,
@@ -55,14 +55,12 @@ const WeatherCard = React.memo(({ data }) => {
       </Link>
     </CardContainer>
   );
-});
+};
 
 // Styled components
 const CardContainer = styled(Box)(
   ({ theme }) => `
     padding: ${theme.spacing(4)};
-    border : 1px solid ${theme.palette.secondary.main};
-    border-radius: ${theme.shape.borderRadius.s};
     background-color: ${theme.palette.primary.main};
     position: relative;
     display: flex;
@@ -101,4 +99,4 @@ const RightContent = styled(Box)(
 `
 );
 
-export default WeatherCard;
+export default React.memo(WeatherCard);

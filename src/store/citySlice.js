@@ -19,7 +19,7 @@ const createCitySlice = (set, get) => {
       )
         return;
 
-      const updatedCities = [...currentCities, newCity];
+      const updatedCities = [newCity, ...currentCities];
       set({ cities: updatedCities });
       localStorage.setItem(
         `cities:${get().user}`,

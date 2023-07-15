@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { Typography, Box } from "@mui/material";
 import WeatherIcon from "../../components/WeatherIcon";
 import { styled } from "@mui/material/styles";
@@ -8,10 +8,16 @@ import useStore from "../../store/useStore";
 const CurrentCity = ({ data }) => {
   const { name, weather } = data;
   const tempUnit = useStore((state) => state.tempUnit);
+
+  const memoizedWeatherIcon = useMemo(
+    () => <WeatherIcon code={weather.icon} isIcon={false} />,
+    [weather.icon]
+  );
+
   return (
     <ContentContainer>
       <LeftContent>
-        <WeatherIcon code={weather.icon} isIcon={false} />
+        {memoizedWeatherIcon}
         <Box display="flex" flexDirection={"column"}>
           <Typography variant="h3">{name}</Typography>
           <Typography variant="body1">
@@ -57,4 +63,5 @@ const RightContent = styled(Box)(
   flex: 1;
   `
 );
-export default CurrentCity;
+
+export default React.memo(CurrentCity);

@@ -68,4 +68,4 @@ const MaxWidthContainer = styled("div")({
   maxWidth: "99%",
 });
 
-export default TemperatureChart;
+export default React.memo(TemperatureChart);

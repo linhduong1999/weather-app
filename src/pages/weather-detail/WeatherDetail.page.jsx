@@ -33,34 +33,32 @@ const WeatherDetail = () => {
     [cities, lat, lon]
   );
 
-  const { data, isLoading, isError } = useGetFiveDaysForecast(lat, lon, units);
+  const { data, isLoading } = useGetFiveDaysForecast(lat, lon, units);
 
   const renderContent = useCallback(() => {
-    if (isLoading) {
-      return <Spinner />;
-    }
-
-    if (isError) {
-      return <div>Error fetching data</div>;
-    }
-
     return (
       <Fragment>
         <Link to="/cities">
           <StyledButton>Back to Cities</StyledButton>
         </Link>
-        <CustomPageContentTemplate>
-          <CurrentCity data={currentCity} />
-        </CustomPageContentTemplate>
-        <PageContentTemplate title="5 Days ForeCast">
-          <FiveDaysForecast weatherData={data} />
-        </PageContentTemplate>
-        <PageContentTemplate title="Graph">
-          <TemperatureChart weatherData={data} />
-        </PageContentTemplate>
+        {isLoading ? (
+          <Spinner />
+        ) : (
+          <>
+            <CustomPageContentTemplate>
+              <CurrentCity data={currentCity} />
+            </CustomPageContentTemplate>
+            <PageContentTemplate title="5 Days ForeCast">
+              <FiveDaysForecast weatherData={data} />
+            </PageContentTemplate>
+            <PageContentTemplate title="Graph">
+              <TemperatureChart weatherData={data} />
+            </PageContentTemplate>
+          </>
+        )}
       </Fragment>
     );
-  }, [isLoading, isError, currentCity, data]);
+  }, [isLoading, currentCity, data]);
 
   return <PageTemplate>{renderContent()}</PageTemplate>;
 };
@@ -82,4 +80,4 @@ const CustomPageContentTemplate = styled(Stack)`
   background-color: ${({ theme }) => theme.palette.common.white};
 `;
 
-export default WeatherDetail;
+export default React.memo(WeatherDetail);

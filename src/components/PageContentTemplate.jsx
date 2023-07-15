@@ -2,16 +2,14 @@ import { Stack, Typography } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import React from "react";
 
-const PageContentTemplate = React.memo(({ children, title }) => {
+const PageContentTemplate = ({ children, title }) => {
   return (
     <PageContainer>
       <Typography variant="h4">{title}</Typography>
       {children}
     </PageContainer>
   );
-});
-
-export default PageContentTemplate;
+};
 
 const PageContainer = styled(Stack)`
   padding: ${({ theme }) => theme.spacing(4)};
@@ -21,3 +19,5 @@ const PageContainer = styled(Stack)`
   gap: ${({ theme }) => theme.spacing(4)};
   flex-direction: column;
 `;
+
+export default React.memo(PageContentTemplate);

@@ -1,29 +1,55 @@
-import React from "react";
-import { Box, Typography, Stack } from "@mui/material";
+import React, { useCallback } from "react";
+import { Box, Typography, Stack, Skeleton } from "@mui/material";
 import WeatherCard from "./WeatherCard";
 import AddCity from "./AddCity";
 import useStore from "../../store/useStore";
 import { styled } from "@mui/material/styles";
 import { getFormattedDate } from "../../utils/formatDate";
 import EmptyState from "../../components/EmptyState";
+import { useGetCurrentForecast } from "../../api/weather-forecast/currentWeatherGetApi";
 import PageContentTemplate from "../../components/PageContentTemplate";
 import { PageTemplate } from "../../components/PageTemplate";
 
 const WeatherList = () => {
-  const { user, cities } = useStore(({ user, cities }) => ({ user, cities }));
+  const { user, cities, addCity } = useStore(({ user, cities, addCity }) => ({
+    user,
+    cities,
+    addCity,
+  }));
+  const { isLoading, fetchData } = useGetCurrentForecast();
+
+  const handleAdd = useCallback(
+    async (place) => {
+      const city = await fetchData(
+        place.geometry.location.lat(),
+        place.geometry.location.lng()
+      );
+      addCity(city);
+    },
+    [fetchData, addCity]
+  );
 
   return (
     <PageTemplate>
       <HeaderContainer>
         <Box>
           <Typography variant="body1">Welcome, {user}</Typography>
-          <Typography variant="h5">Today is {getFormattedDate(new Date())}</Typography>
+          <Typography variant="h5">
+            Today is {getFormattedDate(new Date())}
+          </Typography>
         </Box>
-        <AddCity />
+        <AddCity handleAdd={handleAdd} />
       </HeaderContainer>
       <PageContentTemplate title="Your Cities">
         <Stack display="flex" flexDirection="column" gap={3}>
-          {cities.length > 0 ? (
+          {isLoading && (
+            <WeatherCardContainer>
+              <Skeleton animation="wave" variant="rectangular" height={140} />
+            </WeatherCardContainer>
+          )}
+          {cities.length === 0 ? (
+            <EmptyState />
+          ) : (
             cities.map((city) => (
               <WeatherCardContainer
                 key={`${city.name}-${city.coord.lat}-${city.coord.lon}`}
@@ -31,8 +57,6 @@ const WeatherList = () => {
                 <WeatherCard data={city} />
               </WeatherCardContainer>
             ))
-          ) : (
-            <EmptyState />
           )}
         </Stack>
       </PageContentTemplate>
@@ -50,9 +74,12 @@ const HeaderContainer = styled(Box)(
 );
 
 const WeatherCardContainer = styled(Box)(
-  () => `
+  ({ theme }) => `
   margin-left: 0;
+  border : 1px solid ${theme.palette.secondary.main};
+  overflow: hidden;
+  border-radius: ${theme.shape.borderRadius.s};
 `
 );
 
-export default WeatherList;
+export default React.memo(WeatherList);

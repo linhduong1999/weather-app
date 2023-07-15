@@ -60,4 +60,4 @@ const NavContainer = styled(Box)(({ theme }) => ({
   flexDirection: "column",
 }));
 
-export default NavBar;
+export default React.memo(NavBar);

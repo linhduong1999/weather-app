@@ -1,6 +1,6 @@
-import React from "react";
+import { lazy, Suspense } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import { lazy } from "react";
+import Spinner from "../components/Spinner";
 import { styled } from "@mui/material/styles";
 
 const WeatherList = lazy(() =>
@@ -17,15 +17,17 @@ const AppWrapper = () => {
   return (
     <Container>
       <BrowserRouter basename="/" exact>
-        <Routes>
-          <Route path="/" element={<App />} exact>
-            <Route path="cities" element={<WeatherList />} />
-            <Route path="cities/:cityId" element={<WeatherDetail />} />
-            <Route path="setting" element={<Setting />} />
-          </Route>
-          <Route path="login" element={<LoginForm />} />
-          <Route path="*" element={<Navigate to="login" />} />
-        </Routes>
+        <Suspense fallback={<Spinner />}>
+          <Routes>
+            <Route path="/" element={<App />} exact>
+              <Route path="cities" element={<WeatherList />} />
+              <Route path="cities/:cityId" element={<WeatherDetail />} />
+              <Route path="setting" element={<Setting />} />
+            </Route>
+            <Route path="login" element={<LoginForm />} />
+            <Route path="*" element={<Navigate to="login" />} />
+          </Routes>
+        </Suspense>
       </BrowserRouter>
     </Container>
   );
@@ -35,7 +37,6 @@ const Container = styled("div")(
   ({ theme }) => `
   background-color: #f7f6f9;
   padding: ${theme.spacing(1)};
-
 `
 );
 
