@@ -1,45 +1,33 @@
-const createCitySlice = (set, get) => {
-  const user = localStorage.getItem("user");
+const createCitySlice = (set, get) => ({
+  cities: {},
+  addCity: (newCity) => {
+    const user = get().user;
+    if (!user) return;
 
-  return {
-    cities: user
-      ? JSON.parse(localStorage.getItem(`cities:${user}`)) || []
-      : [],
-
-    addCity: (newCity) => {
-      if (!get().user) return;
-
-      const currentCities = get().cities;
-      if (
-        currentCities.some(
-          (city) =>
-            city.coord.lat === newCity.coord.lat &&
-            city.coord.lon === newCity.coord.lon
-        )
+    const currentCities = get().cities[user] || [];
+    if (
+      currentCities.some(
+        (city) =>
+          city.coord.lat === newCity.coord.lat &&
+          city.coord.lon === newCity.coord.lon
       )
-        return;
+    )
+      return;
 
-      const updatedCities = [newCity, ...currentCities];
-      set({ cities: updatedCities });
-      localStorage.setItem(
-        `cities:${get().user}`,
-        JSON.stringify(updatedCities)
-      );
-    },
+    const updatedCities = [newCity, ...currentCities];
+    set((state) => ({ cities: { ...state.cities, [user]: updatedCities } }));
+  },
+  removeCity: (cityName) => {
+    const user = get().user;
+    if (!user) return;
 
-    removeCity: (cityName) => {
-      if (!get().user) return;
-      const updatedCities = get().cities.filter(
-        (city) => city.name !== cityName
-      );
+    const currentCities = get().cities[user] || [];
+    const updatedCities = currentCities.filter(
+      (city) => city.name !== cityName
+    );
 
-      set({ cities: updatedCities });
-      localStorage.setItem(
-        `cities:${get().user}`,
-        JSON.stringify(updatedCities)
-      );
-    },
-  };
-};
+    set((state) => ({ cities: { ...state.cities, [user]: updatedCities } }));
+  },
+});
 
 export default createCitySlice;

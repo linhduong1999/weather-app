@@ -7,7 +7,10 @@ import useStore from "../../store/useStore";
 
 const CurrentCity = ({ data }) => {
   const { name, weather } = data;
-  const tempUnit = useStore((state) => state.tempUnit);
+  const { tempUnit, user } = useStore(({ tempUnit, user }) => ({
+    tempUnit,
+    user,
+  }));
 
   const memoizedWeatherIcon = useMemo(
     () => <WeatherIcon code={weather.icon} isIcon={false} />,
@@ -28,7 +31,7 @@ const CurrentCity = ({ data }) => {
 
       <RightContent>
         <Typography variant="h3">
-          {data[tempUnit].current}°{tempUnit}
+          {data[tempUnit[user]].current}°{tempUnit[user]}
         </Typography>
         <Typography variant="body1">Today</Typography>
       </RightContent>

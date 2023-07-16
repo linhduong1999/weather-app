@@ -47,10 +47,10 @@ const WeatherList = () => {
               <Skeleton animation="wave" variant="rectangular" height={140} />
             </WeatherCardContainer>
           )}
-          {!isLoading && cities.length === 0 ? (
+          {!isLoading && cities[user].length === 0 ? (
             <EmptyState />
           ) : (
-            cities.map((city) => (
+            cities[user].map((city) => (
               <WeatherCardContainer
                 key={`${city.name}-${city.coord.lat}-${city.coord.lon}`}
               >

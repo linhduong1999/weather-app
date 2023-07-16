@@ -9,9 +9,11 @@ import { capitalizeFirstLetter } from "../../utils/transformData";
 
 const WeatherCard = ({ data }) => {
   const { name, weather, coord } = data;
-  const { removeCity, tempUnit } = useStore((state) => ({
+
+  const { removeCity, tempUnit, user } = useStore((state) => ({
     removeCity: state.removeCity,
     tempUnit: state.tempUnit,
+    user: state.user,
   }));
 
   const handleRemoveCity = React.useCallback(() => {
@@ -40,14 +42,14 @@ const WeatherCard = ({ data }) => {
 
           <RightContent>
             <Typography variant="h3" color="common.white">
-              {data[tempUnit].current}°{tempUnit}
+              {data[tempUnit[user]].current}°{tempUnit[user]}
             </Typography>
             <Box display="flex" gap={2}>
               <Typography variant="body1" color="common.white">
-                L: {data[tempUnit].low}°{tempUnit}
+                L: {data[tempUnit[user]].low}°{tempUnit[user]}
               </Typography>
               <Typography variant="body1" color="common.white">
-                H: {data[tempUnit].high}°{tempUnit}
+                H: {data[tempUnit[user]].high}°{tempUnit[user]}
               </Typography>
             </Box>
           </RightContent>

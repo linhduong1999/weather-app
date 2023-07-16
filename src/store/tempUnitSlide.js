@@ -1,16 +1,11 @@
-const createTempUnitSlice = (set, get) => {
-  const user = localStorage.getItem("user");
+const createTempUnitSlice = (set, get) => ({
+  tempUnit: {},
+  toggleUnit: (newUnit) => {
+    const user = get().user;
+    if (!user) return;
 
-  return {
-    tempUnit: user ? localStorage.getItem(`tempUnit:${user}`) || "C" : "C",
-
-    toggleUnit: (newUnit) => {
-      if (!get().user) return;
-
-      set({ tempUnit: newUnit });
-      localStorage.setItem(`tempUnit:${get().user}`, newUnit);
-    },
-  };
-};
+    set(state => ({ tempUnit: { ...state.tempUnit, [user]: newUnit }}));
+  },
+});
 
 export default createTempUnitSlice;

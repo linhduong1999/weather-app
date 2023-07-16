@@ -10,10 +10,13 @@ import { styled } from "@mui/material/styles";
 import { theme } from "../../theme";
 
 const TemperatureToggle = () => {
-  const { tempUnit, toggleUnit } = useStore(({ tempUnit, toggleUnit }) => ({
-    tempUnit,
-    toggleUnit,
-  }));
+  const { tempUnit, toggleUnit, user } = useStore(
+    ({ tempUnit, toggleUnit, user }) => ({
+      tempUnit,
+      toggleUnit,
+      user,
+    })
+  );
 
   const handleToggle = (event, newUnit) => {
     if (newUnit !== null) {
@@ -24,7 +27,7 @@ const TemperatureToggle = () => {
   const memoizedToggleButtonGroup = useMemo(
     () => (
       <StyledToggleButtonGroup
-        value={tempUnit}
+        value={tempUnit[user]}
         exclusive
         onChange={handleToggle}
         aria-label="temperature"
@@ -37,7 +40,7 @@ const TemperatureToggle = () => {
         </StyledToggleButton>
       </StyledToggleButtonGroup>
     ),
-    [tempUnit, handleToggle]
+    [tempUnit[user], handleToggle]
   );
 
   return (

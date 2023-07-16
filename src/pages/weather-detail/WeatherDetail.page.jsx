@@ -18,19 +18,23 @@ const WeatherDetail = () => {
   const lat = queryParams.get("lat") ?? "";
   const lon = queryParams.get("lon") ?? "";
 
-  const { tempUnit, cities } = useStore(({ tempUnit, cities }) => ({
+  const { tempUnit, cities, user } = useStore(({ tempUnit, cities, user }) => ({
     tempUnit,
     cities,
+    user,
   }));
 
   const units = useMemo(
-    () => (tempUnit === "C" ? "metric" : "imperial"),
-    [tempUnit]
+    () => (tempUnit[user] === "C" ? "metric" : "imperial"),
+    [tempUnit[user]]
   );
 
   const currentCity = useMemo(
-    () => cities.find((city) => city.coord.lat == lat && city.coord.lon == lon),
-    [cities, lat, lon]
+    () =>
+      cities[user].find(
+        (city) => city.coord.lat == lat && city.coord.lon == lon
+      ),
+    [cities, user, lat, lon]
   );
 
   const { data, isLoading } = useGetFiveDaysForecast(lat, lon, units);

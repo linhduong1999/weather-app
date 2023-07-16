@@ -1,33 +1,31 @@
 import { validateEmail } from "../utils/validateEmail";
 
 const createUserSlice = (set, get) => ({
-  user: localStorage.getItem("user") || null,
-
+  user: null,
   login: (email, password) => {
     if (validateEmail(email) && password === "test1234") {
-      const persistedCities = JSON.parse(
-        localStorage.getItem(`cities:${email}`)
-      );
+      set({ user: email });
 
-      if (persistedCities) {
-        set({ user: email, cities: persistedCities });
-      } else {
-        set({ user: email });
+      // Initialize cities and temperature units for a new user
+      const currentCities = get().cities;
+      const currentTempUnits = get().tempUnit;
+      if (!currentCities[email]) {
+        set(state => ({ cities: { ...state.cities, [email]: [] }}));
       }
-      localStorage.setItem("user", email);
+      if (!currentTempUnits[email]) {
+        set(state => ({ tempUnit: { ...state.tempUnit, [email]: "C" }}));
+      }
 
       return true;
     } else {
       set({ user: null });
-      localStorage.removeItem("user");
       return false;
     }
   },
-
   logout: () => {
-    set({ user: null, cities: [], tempUnit: "C" });
-    localStorage.removeItem("user");
+    set({ user: null });
   },
 });
+
 
 export default createUserSlice;

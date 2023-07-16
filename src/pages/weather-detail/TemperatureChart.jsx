@@ -20,7 +20,10 @@ const textStyle = {
 };
 
 const TemperatureChart = ({ weatherData }) => {
-  const tempUnit = useStore((state) => state.tempUnit);
+  const { tempUnit, user } = useStore(({ tempUnit, user }) => ({
+    tempUnit,
+    user,
+  }));
 
   return (
     <MaxWidthContainer>
@@ -39,7 +42,7 @@ const TemperatureChart = ({ weatherData }) => {
           <XAxis dataKey="date.dayOfWeek" />
           <YAxis>
             <Label
-              value={`Temperature (°${tempUnit})`}
+              value={`Temperature (°${tempUnit[user]})`}
               position="left"
               angle={-90}
               offset={20}
