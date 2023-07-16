@@ -32,7 +32,7 @@ export const NavLink = styled(Link)(
   justify-content: space-between;
   padding: ${theme.spacing(1)} ${theme.spacing(4)};
   border-radius: ${theme.shape.borderRadius.s};
-  height: 40px;
+  height: 60px;
   color: ${
     active === "true" ? theme.palette.common.white : theme.palette.primary.main
   };
