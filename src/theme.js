@@ -6,6 +6,10 @@ export const theme = createTheme({
     allVariants: {
       color: "#070B47",
     },
+    customFontSize: {
+      s: "16px",
+      m: "18px",
+    },
   },
   palette: {
     background: {

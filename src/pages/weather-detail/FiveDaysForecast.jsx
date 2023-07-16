@@ -53,14 +53,14 @@ const FiveDaysForecast = ({ weatherData }) => {
 
 const StyledTableHeaderCell = styled(TableCell)(({ theme }) => ({
   fontWeight: "bold",
-  fontSize: "18px",
+  fontSize: theme.typography.customFontSize.m,
   color: theme.palette.primary.main,
 }));
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   borderBottom: (props) =>
     props.lastItem ? "none" : `1px solid ${theme.palette.secondary.main}`,
-  fontSize: "16px",
+  fontSize: theme.typography.customFontSize.s,
   color: theme.palette.primary.main,
 }));
 
