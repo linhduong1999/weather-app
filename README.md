@@ -8,11 +8,11 @@ This Weather App is a React-based web application that allows users to view weat
 - Navigate to the project directory: `cd weather-app`
 - Create an ".env" file the root of the project and add in the api keys
 ```
-VITE_REACT_APP_OPEN_WEATHER_KEY="YOUR_KEY"'
-VITE_REACT_APP_GOOGLE_MAP_AUTOCOMPLETE="YOUR_KEY"'
-VITE_REACT_FIVE_DAY_FORECAST="YOUR_KEY"'
-VITE_REACT_CURRENT_WEATHER="YOUR_KEY"'
-VITE_REACT_WEATHER_ICON="YOUR_KEY"'
+VITE_REACT_APP_OPEN_WEATHER_KEY="YOUR_API_KEY"
+VITE_REACT_APP_GOOGLE_MAP_AUTOCOMPLETE="YOUR_API_KEY"
+VITE_REACT_FIVE_DAY_FORECAST="BASE_URL"
+VITE_REACT_CURRENT_WEATHER="BASE_URL"
+VITE_REACT_WEATHER_ICON="BASE_URL"
 ```
 - Install dependencies: `npm install`
 - Start the development server: `npm start`
