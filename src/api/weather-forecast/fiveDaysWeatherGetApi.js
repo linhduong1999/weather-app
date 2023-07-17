@@ -26,8 +26,9 @@ export const useGetFiveDaysForecast = (lat, lon, tempUnits) => {
       setData(transformedData);
       setIsLoading(false);
     } catch (error) {
-      console.error("Error fetching data:", error.message);
+      setIsLoading(false);
       setIsError(true);
+      window.alert("An error occurred while fetching the five days forecast."); // Display the error message as a window alert
     }
   }, [lat, lon, tempUnits]);
 
