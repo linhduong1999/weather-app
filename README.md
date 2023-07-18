@@ -30,3 +30,6 @@ Please note that the ".env" file contains all the necessary API key and base URL
 - Settings screen to toggle between metric (Celcius) and imperial (Fahrenheit) temperature formats.
 - Login screen with email and password authentication. Each user has a separate session to store app - state.
 - Logout functionality to return to the login screen.
+
+## Figma Wireframe
+https://www.figma.com/proto/4DuujWuy6YBaCYcoV7ow9x?type=design&node-id=0-1&mode=design&t=NYI4jUO6RuwFgtHX-6
